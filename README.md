@@ -1,18 +1,23 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+このプロダクトはrubocopを使用しています。
+コミットをする前に必ずrubocopでコードに不備がないか確認を行うこと。
 
 Things you may want to cover:
 
 * Ruby version
+
 2.5.2
 
 * rails version
-* 5.2.3
+
+5.2.3
 
 * Database creation
+
 mysql
 
 * marked
-used rubocop
+
+コード規約 rubocop
+ユーザー関連 device
