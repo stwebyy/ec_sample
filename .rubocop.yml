@@ -21,3 +21,7 @@ Style/StringLiterals:
 # "Line is too long"を無効
 Metrics/LineLength:
   Enabled: false
+
+# Missing magic comment # frozen_string_literal: true.を無効
+Style/FrozenStringLiteralComment:
+  Enabled: false
