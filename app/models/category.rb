@@ -1,4 +1,5 @@
 class Category < ActiveRecord::Base
-  belongs_to :item
+  has_many :item, through: :item_category
+  has_many :item_category
   validates :name, presence: true, length: { minimum: 1 }, uniquness: true
 end
