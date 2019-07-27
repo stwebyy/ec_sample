@@ -10,14 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_26_122344) do
+ActiveRecord::Schema.define(version: 2019_07_27_040145) do
 
   create_table "items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci", force: :cascade do |t|
     t.string "name", limit: 50, null: false, comment: "商品名"
     t.integer "stocks", default: 0, null: false, comment: "在庫数"
     t.text "descriotion", null: false, comment: "商品説明"
     t.boolean "hide", null: false, comment: "表示・非表示"
-    t.text "review", limit: 255, comment: "商品レビュー"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
