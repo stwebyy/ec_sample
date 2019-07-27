@@ -10,37 +10,45 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_27_130005) do
+ActiveRecord::Schema.define(version: 2019_07_27_133527) do
 
-  create_table "categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci", force: :cascade do |t|
+  create_table "categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false, comment: "カテゴリ名"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "item_id"
+    t.index ["item_id"], name: "index_categories_on_item_id"
   end
 
-  create_table "itemreviews", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci", force: :cascade do |t|
+  create_table "itemreviews", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.text "review", comment: "商品レビュー"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "item_id"
+    t.index ["item_id"], name: "index_itemreviews_on_item_id"
   end
 
-  create_table "items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci", force: :cascade do |t|
+  create_table "items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", limit: 50, null: false, comment: "商品名"
     t.integer "stocks", default: 0, null: false, comment: "在庫数"
     t.text "descriotion", null: false, comment: "商品説明"
     t.boolean "hide", null: false, comment: "表示・非表示"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "shop_id"
+    t.index ["shop_id"], name: "index_items_on_shop_id"
   end
 
-  create_table "rates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci", force: :cascade do |t|
+  create_table "rates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "high_rate", default: 0, null: false, comment: "高評価"
     t.integer "low_rate", default: 0, null: false, comment: "低評価"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "item_id"
+    t.index ["item_id"], name: "index_rates_on_item_id"
   end
 
-  create_table "shops", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci", force: :cascade do |t|
+  create_table "shops", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", limit: 40, null: false, comment: "店舗名"
     t.string "address", null: false, comment: "住所"
     t.integer "telephone", null: false, comment: "電話番号"
@@ -50,7 +58,7 @@ ActiveRecord::Schema.define(version: 2019_07_27_130005) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci", force: :cascade do |t|
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
@@ -63,8 +71,15 @@ ActiveRecord::Schema.define(version: 2019_07_27_130005) do
     t.string "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "shop_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["shop_id"], name: "index_users_on_shop_id"
   end
 
+  add_foreign_key "categories", "items"
+  add_foreign_key "itemreviews", "items"
+  add_foreign_key "items", "shops"
+  add_foreign_key "rates", "items"
+  add_foreign_key "users", "shops"
 end
