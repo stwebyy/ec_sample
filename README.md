@@ -7,18 +7,18 @@ Things you may want to cover:
 
 * Ruby version
 
-2.5.2
+2.5.2  
 
 * rails version
 
-5.2.3
+5.2.3  
 
 * Database creation
 
-mysql
+mysql  
 
 * marked
 
-コード規約 rubocop
-ユーザー関連 device
-テスト RSpec
+コード規約 rubocop  
+ユーザーモデル device  
+テスト関連 RSpec, factory_bot, database_cleaner
