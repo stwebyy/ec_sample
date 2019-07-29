@@ -2,8 +2,7 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   describe "データ挿入テスト" do
-    let!(:shop) { create(:shop) }
-    let!(:user) { create(:user, shop_id: shop.id) }
+    let!(:user) { create(:user) }
     context "必要事項が全て記入されている場合" do
       it "ユーザー作成がされていること" do
         expect(user).to be_valid
@@ -11,18 +10,10 @@ RSpec.describe User, type: :model do
     end
   end
   describe 'varidate動作検証' do
-    let!(:shop) { create(:shop) }
-    let(:user) { build(:user, shop_id: shop.id) }
+    let(:user) { build(:user) }
     subject { save }
     shared_examples 'saveに失敗する例' do
       it { is_expected.to eq(false) }
-    end
-    context 'shop_idがないためsaveができない' do
-      before do
-        user.shop_id = ''
-      end
-      let(:save) { user.save }
-      it_behaves_like 'saveに失敗する例'
     end
     context 'nameがないためsaveができない' do
       before do

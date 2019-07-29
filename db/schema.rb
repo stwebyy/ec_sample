@@ -42,8 +42,6 @@ ActiveRecord::Schema.define(version: 2019_07_27_233555) do
     t.boolean "hide", null: false, comment: "表示・非表示"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "shop_id"
-    t.index ["shop_id"], name: "index_items_on_shop_id"
   end
 
   create_table "rates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -53,16 +51,6 @@ ActiveRecord::Schema.define(version: 2019_07_27_233555) do
     t.datetime "updated_at", null: false
     t.bigint "item_id"
     t.index ["item_id"], name: "index_rates_on_item_id"
-  end
-
-  create_table "shops", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "name", limit: 40, null: false, comment: "店舗名"
-    t.string "address", null: false, comment: "住所"
-    t.integer "telephone", null: false, comment: "電話番号"
-    t.string "person", null: false, comment: "責任者"
-    t.boolean "hide", null: false, comment: "表示・非表示"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -78,17 +66,14 @@ ActiveRecord::Schema.define(version: 2019_07_27_233555) do
     t.string "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "shop_id"
     t.string "name", null: false
+    t.boolean "admin", default: false, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-    t.index ["shop_id"], name: "index_users_on_shop_id"
   end
 
   add_foreign_key "item_categories", "categories"
   add_foreign_key "item_categories", "items"
   add_foreign_key "itemreviews", "items"
-  add_foreign_key "items", "shops"
   add_foreign_key "rates", "items"
-  add_foreign_key "users", "shops"
 end
