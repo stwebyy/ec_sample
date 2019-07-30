@@ -1,6 +1,6 @@
 class Item < ActiveRecord::Base
-  belongs_to :shop
-  has_many :itemreviews, :category, :itemreview
+  has_many :category
+  has_many :itemreview
   has_many :category, through: :item_category
   has_many :item_category
   validates :name, presence: true, length: { in: 1..50 }, uniqueness: true

@@ -38,8 +38,9 @@ ActiveRecord::Schema.define(version: 2019_07_27_233555) do
   create_table "items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", limit: 50, null: false, comment: "商品名"
     t.integer "stocks", default: 0, null: false, comment: "在庫数"
-    t.text "descriotion", null: false, comment: "商品説明"
+    t.text "description", null: false, comment: "商品説明"
     t.boolean "hide", null: false, comment: "表示・非表示"
+    t.integer "price", null: false, comment: "価格"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
