@@ -1,2 +1,28 @@
 <h1>Items#index</h1>
 <p>Find me in app/views/items/index.html.erb</p>
+
+<% @items.each do |item| %>
+  <div>
+    <p>
+      <%= item.name %>
+    </p>
+    <p>
+      <%= item.stocks %>
+    </p>
+    <p>
+      <%= item.price %>
+    </p>
+    <p>
+      <%= item.description %>
+    </p>
+    <% if user_signed_in?&& current_user.admin = 1 %>
+    <%= link_to "情報変更", edit_item_path(item.id) %>
+    <%= link_to "削除", item_path(item.id), method: :delete, data: { confirm: "本当に削除してよろしいですか?" } %>
+    <% end %>
+  </div>
+<% end %>
+<% if user_signed_in?&& current_user.admin = 1 %>
+<%= link_to "商品登録", new_item_path %>
+<% end %>
+
+
