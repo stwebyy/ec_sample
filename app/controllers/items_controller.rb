@@ -5,12 +5,13 @@ class ItemsController < ApplicationController
   # before_destroy :should_not_destroy_if_stock, prepend: true
 
   def new
-    @items = Item.new
+    @item = Item.new
+    @item.item_categories.build
   end
 
   def create
-    @items = Item.new(item_params)
-    if @items.save
+    @item = Item.new(item_params)
+    if @item.save
       flash[:success] = "商品の登録をしました。"
       redirect_back(fallback_location: items_path)
     else
@@ -33,11 +34,11 @@ class ItemsController < ApplicationController
 
   def update
     @item = Item.find(params[:id])
-    if @item.update_attributes(item_params)
-      redirect_back(fallback_location: items_path)
+    if @item.update(item_params)
+      redirect_to root_path
     else
       flash[:error] = "商品の更新に失敗しました。"
-      render :show
+      redirect_back(fallback_location: root_path)
     end
   end
 
@@ -50,7 +51,7 @@ class ItemsController < ApplicationController
   private
 
   def item_params
-    params.require(:item).permit(:name, :stock, :description, :hide)
+    params.require(:item).permit(:name, :stocks, :price, :description, :hide, item_categories_attributes: [:id, :category_id])
   end
 
   def logged_in_user

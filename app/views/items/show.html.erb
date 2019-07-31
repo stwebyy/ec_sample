@@ -1,2 +1,26 @@
 <h1>Items#show</h1>
 <p>Find me in app/views/items/show.html.erb</p>
+
+    商品名：<%= @item.name %>
+    </p>
+    <p>
+      在庫数：<%= @item.stocks %>
+    </p>
+    <p>
+      価格：<%= @item.price %>
+    </p>
+    <p>
+      商品説明：<%= @item.description %>
+    </p>
+    <% unless @item.categories.empty? %>
+      <% @item.categories.each do |cate| %>
+        <p>
+          カテゴリ：<%= cate.name %>
+        </p>
+      <% end %>
+    <% end %>
+    <% if user_signed_in? %>
+    口コミを書く
+    <% end %>
+
+

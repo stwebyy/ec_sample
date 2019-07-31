@@ -1,2 +1,27 @@
 <h1>Items#new</h1>
 <p>Find me in app/views/items/new.html.erb</p>
+
+<%= form_for @item do |f| %>
+  
+  <%= f.label :"商品名" %>
+  <%= f.text_field :name %>
+  
+  <%= f.label :"在庫数" %>
+  <%= f.number_field :stocks %>
+
+  <%= f.label :"価格" %>
+  <%= f.number_field :price %>
+
+  <%= f.label :"商品概要" %>
+  <%= f.text_field :description %>
+
+  <%= f.label :"表示・非表示設定" %>
+  <%= f.check_box :hide %>
+
+  <%= f.fields_for :item_categories do |c| %>
+    <%= c.collection_select :category_id, Category.all, :id, :name, :prompt =>"カテゴリを選択してください。" %>
+  <% end %>
+
+  <%= f.submit "登録" %>
+
+<% end %>

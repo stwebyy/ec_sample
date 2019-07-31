@@ -1,8 +1,8 @@
 class Item < ActiveRecord::Base
-  has_many :category
-  has_many :itemreview
-  has_many :category, through: :item_category
-  has_many :item_category
+  has_many :itemreviews
+  has_many :item_categories
+  has_many :categories, through: :item_categories
+  accepts_nested_attributes_for :item_categories
   validates :name, presence: true, length: { in: 1..50 }, uniqueness: true
   validates :stocks, presence: true, numericality: { only_integer: true, greater_than: 0 }
   validates :description, presence: true, length: { minimum: 3 }

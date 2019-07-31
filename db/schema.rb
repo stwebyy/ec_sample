@@ -43,6 +43,8 @@ ActiveRecord::Schema.define(version: 2019_07_27_233555) do
     t.integer "price", null: false, comment: "価格"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "category_id"
+    t.index ["category_id"], name: "index_items_on_category_id"
   end
 
   create_table "rates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -76,5 +78,6 @@ ActiveRecord::Schema.define(version: 2019_07_27_233555) do
   add_foreign_key "item_categories", "categories"
   add_foreign_key "item_categories", "items"
   add_foreign_key "itemreviews", "items"
+  add_foreign_key "items", "categories"
   add_foreign_key "rates", "items"
 end
