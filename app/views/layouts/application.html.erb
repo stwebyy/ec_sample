@@ -13,7 +13,7 @@
     <header>
         <nav>
             <% if user_signed_in? %>
-            ログイン中:<strong><%= current_user.name %></strong>
+            ログイン中:<strong><%= link_to current_user.name, user_path(current_user.id) %></strong>
             <%= link_to 'プロフィール変更', edit_user_registration_path %>
             <%= link_to 'ログアウト', destroy_user_session_path, method: :delete %>
         <% else %>
@@ -26,5 +26,6 @@
     <p class="alert"><%= alert %></p>
 
     <%= yield %>
+    <p><%= link_to 'TOPへ戻る', root_path %></p>
   </body>
 </html>

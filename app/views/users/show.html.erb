@@ -1,0 +1,6 @@
+<h1>Users#new</h1>
+<p>Find me in app/views/users/new.html.erb</p>
+<h3><%= @user.email %></h3>
+ <% @user.liked_items.each do |item| %>
+  いいね！した商品<%= item.name %>
+<% end %> 
