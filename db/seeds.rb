@@ -15,6 +15,9 @@
     description: "test_description#{num}",
     hide: 1
   )
+  Category.create!(
+    name: "test_category#{num}"
+  )
 end
 
 User.create!(
@@ -22,4 +25,9 @@ User.create!(
   email: "admin@admin.com",
   password: "test_admin",
   admin: 1
+)
+
+ItemReview.create!(
+  review: "test_review",
+  item_id: 1
 )

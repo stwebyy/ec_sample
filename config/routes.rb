@@ -1,9 +1,12 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  resources :items do
+    resources :item_reviews,  only: [:new, :index, :create, :update, :destroy]
+  end
+
   get 'item_categories/create'
   get 'item_categories/destroy'
-  # resources :users, only: [:index, :show]
   devise_for :users, :controllers => {
     :registrations => 'users/registrations',
     :sessions => 'users/sessions'   
@@ -13,7 +16,9 @@ Rails.application.routes.draw do
     get "sign_in", :to => "users/sessions#new"
     get "sign_out", :to => "users/sessions#destroy" 
   end
-  resources :items
+  resources :items do
+    resources :likes, only: [:create, :destroy]
+  end
   resources :categories,  only: [:new, :create]
   root 'items#index'
   resources :categories do

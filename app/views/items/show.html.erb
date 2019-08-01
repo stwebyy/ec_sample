@@ -19,8 +19,21 @@
         </p>
       <% end %>
     <% end %>
-    <% if user_signed_in? %>
-    口コミを書く
-    <% end %>
 
+<% unless @item.item_reviews.empty? %>
+  <% @item.item_reviews.each do |re| %>
+    <p>口コミ：<%= re.review %></p>
+  <% end %>
+  <% end %>
+口コミ一覧
+<%= link_to "口コミ一覧ページ", item_item_reviews_path(@item.id) %>
+<% if user_signed_in? %>
+  <%= link_to "口コミを書く", new_item_item_review_path(@item.id) %>
+<% end %>
+<h3>いいね件数: <%= @item.likes.count %></h3>
+<% if current_user.already_liked?(@item) %>
+  <%= button_to 'いいねを取り消す', item_like_path(@item), method: :delete %>
+<% else %>
+  <%= button_to 'いいね', item_likes_path(@item) %>
+<% end %>
 

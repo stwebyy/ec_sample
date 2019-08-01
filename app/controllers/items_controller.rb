@@ -26,6 +26,7 @@ class ItemsController < ApplicationController
 
   def show
     @item = Item.find(params[:id])
+    @like = Like.new
   end
 
   def edit

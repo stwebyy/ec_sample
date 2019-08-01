@@ -27,12 +27,12 @@ ActiveRecord::Schema.define(version: 2019_07_27_233555) do
     t.index ["item_id"], name: "index_item_categories_on_item_id"
   end
 
-  create_table "itemreviews", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "item_reviews", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.text "review", comment: "商品レビュー"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "item_id"
-    t.index ["item_id"], name: "index_itemreviews_on_item_id"
+    t.index ["item_id"], name: "index_item_reviews_on_item_id"
   end
 
   create_table "items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -43,17 +43,15 @@ ActiveRecord::Schema.define(version: 2019_07_27_233555) do
     t.integer "price", null: false, comment: "価格"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "category_id"
-    t.index ["category_id"], name: "index_items_on_category_id"
   end
 
-  create_table "rates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "high_rate", default: 0, null: false, comment: "高評価"
-    t.integer "low_rate", default: 0, null: false, comment: "低評価"
+  create_table "likes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "item_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "item_id"
-    t.index ["item_id"], name: "index_rates_on_item_id"
+    t.index ["item_id"], name: "index_likes_on_item_id"
+    t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -77,7 +75,7 @@ ActiveRecord::Schema.define(version: 2019_07_27_233555) do
 
   add_foreign_key "item_categories", "categories"
   add_foreign_key "item_categories", "items"
-  add_foreign_key "itemreviews", "items"
-  add_foreign_key "items", "categories"
-  add_foreign_key "rates", "items"
+  add_foreign_key "item_reviews", "items"
+  add_foreign_key "likes", "items"
+  add_foreign_key "likes", "users"
 end

@@ -1,0 +1,13 @@
+<h1>ItemReviews#new</h1>
+<p>Find me in app/views/item_reviews/new.html.erb</p>
+
+<%= form_for @review, url: item_item_reviews_path do |f| %>
+  
+  <%= f.label :"商品レビュー" %>
+  <%= f.text_field :review %>
+
+  <%= f.hidden_field :item_id, value: params[:item_id]%>
+
+  <%= f.submit "登録" %>
+
+<% end %>
