@@ -71,3 +71,4 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 # 追加gem
 gem 'devise'
+gem 'rails-i18n', '~> 5.1'
