@@ -2,7 +2,6 @@
 
 Rails.application.routes.draw do
   root 'items#index'
-
   resources :items do
     resources :item_reviews,  only: [:new, :index, :create, :update, :destroy]
     resources :likes, only: [:create, :destroy]
@@ -22,9 +21,7 @@ Rails.application.routes.draw do
     resources :likes, only: [:create, :destroy]
     post :pay, on: :member
   end
-  resources :categories,  only: [:new, :create]
-  root 'items#index'
-　resources :categories,  only: [:new, :create] do
+  resources :categories,  only: [:new, :create] do
     resource :item_categories, only: [:create, :destroy]
   end
   resources :users, only: [:show]
