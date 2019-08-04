@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  stocks: 1
+  item: one
+  cart: one
+
+two:
+  stocks: 1
+  item: two
+  cart: two
