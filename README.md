@@ -13,7 +13,7 @@ Things you may want to cover:
 
 5.2.3  
 
-* Database creation
+* Database
 
 mysql  
 
@@ -22,3 +22,4 @@ mysql
 コード規約 rubocop  
 ユーザーモデル device  
 テスト関連 RSpec, factory_bot, database_cleaner
+認証機能 pay.jp
