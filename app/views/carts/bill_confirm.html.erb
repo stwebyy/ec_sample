@@ -1,0 +1,27 @@
+<h1>Carts#bill_confirm</h1>
+<p>Find me in app/views/carts/bill_confirm.html.erb</p>
+<p>購入商品の確認</p>
+<% @cart_items.each do |item| %>
+<% price = item.item.price * item.stocks %>
+  <p>
+    商品名：<%= link_to item.item.name, item_path(item.item.id) %>
+  </p>
+  <p>
+    数量：<%= item.stocks %>
+  </p>
+  <p>価格：<%= item.item.price %>円</p>
+  <p>この商品の合計金額：<%= price %>円
+  <hr>
+<% end %>
+<p>総合計金額：<%= @all_price %>円</p>
+<hr>
+<p>こちらでよろしければカードで支払うボタンを押して、購入を完了してください。</p>
+<%= form_with url: pay_cart_path(id: params[:cart_id]) do |form| %>
+  <%= form.hidden_field :amount, value: @all_price %>
+    <script type="text/javascript"
+    src="https://checkout.pay.jp"
+    class="payjp-button"
+    data-key="pk_test_252340d080f8e6ddbc331417">
+  </script>
+<% end %>
+<%= link_to 'カートへ戻る', current_cart %>

@@ -2,16 +2,21 @@
 <p>Find me in app/views/carts/show.html.erb</p>
 <p>カートに入っている商品</p>
 <% @cart_items.each do |item| %>
+<% price = item.item.price * item.stocks %>
   <p>
-    商品名：<%= link_to item.item.name, item_path(item.item.id) %>
+    商品名：<%= link_to item.item.name, item_path(item.item.id), data: {"turbolinks" => false}  %>
   </p>
   <p>
     数量：<%= item.stocks %>
   </p>
-  <%= button_to 'カートから削除する', item_delete_item_path(item.item.id), method: :delete %>
+  <p>価格：<%= item.item.price %>円</p>
+  <p>商品の合計金額：<%= price %>円
   <%= form_with url: item_update_item_path(item.item.id) do |form| %>
     <%= form.number_field :stocks, min:1 %>
     <%= form.hidden_field :item_id, value: item.id %>
     <%= form.submit "数量を変更する" %>
   <% end %>
+  <%= button_to 'カートから削除する', item_delete_item_path(item.item.id), method: :delete %>
+  <hr>
 <% end %>
+<%= link_to "商品購入ページ", cart_bill_confirm_path(current_cart.id) %>

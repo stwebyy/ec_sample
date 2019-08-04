@@ -24,6 +24,26 @@ class CartsController < ApplicationController
     redirect_to cart_path(session[:cart_id])
   end
 
+  def bill_confirm
+    @cart_items = current_cart.cart_items
+    all_price = 0
+    @cart_items.each do |c|
+      @total_price = c.item.stocks * c.item.price
+      @all_price = @all_price.to_i + @total_price.to_i
+    end
+  end
+
+  def pay
+    Payjp.api_key = "sk_test_5494a47f306e5073db277ee1"
+    charge = Payjp::Charge.create(
+      :amount => params[:amount],
+      :card => params['payjp-token'],
+      :currency => 'jpy',
+    )
+    redirect_to root_path, notice: 'ご購入、ありがとうございました。'
+  end
+
+
   private
 
   def cart_params

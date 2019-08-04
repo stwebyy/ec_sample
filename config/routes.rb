@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     post '/add_item' => 'carts#add_item'
     post '/update_item' => 'carts#update_item'
     delete '/delete_item' => 'carts#delete_item'
+    post :pay, on: :member
   end
   devise_for :users, :controllers => {
     :registrations => 'users/registrations',
@@ -17,13 +18,12 @@ Rails.application.routes.draw do
     get "sign_in", :to => "users/sessions#new"
     get "sign_out", :to => "users/sessions#destroy" 
   end
-  resources :items do
-    resources :likes, only: [:create, :destroy]
-    post :pay, on: :member
-  end
   resources :categories,  only: [:new, :create] do
     resource :item_categories, only: [:create, :destroy]
   end
   resources :users, only: [:show]
-  resources :carts, only: [:show]
+  resources :carts, only: [:show] do
+    get '/bill_confirm' => 'carts#bill_confirm'
+    post :pay, on: :member
+  end
 end

@@ -21,12 +21,13 @@
         </p>
       <% end %>
     <% end %>
-    (<%= item.liked_users.count %>)
+    <p>ユーザーからいいねされた数：(<%= item.liked_users.count %>)</p>
     <% if user_signed_in?&& current_user.admin = 1 %>
     <%= link_to "情報変更", edit_item_path(item.id) %>
     <%= link_to "削除", item_path(item.id), method: :delete, data: { confirm: "本当に削除してよろしいですか?" } %>
     <% end %>
   </div>
+  <hr>
 <% end %>
 <% if user_signed_in?&& current_user.admin = 1 %>
 <%= link_to "商品登録", new_item_path %>
