@@ -6,14 +6,11 @@ class CartsController < ApplicationController
   end
 
   def add_item
-    @cart = current_cart
-    @item = Item.find(params[:item_id])
-    @cart_items = @cart.cart_items.build
     if @cart_item.blank?
-      @cart_item = current_cart.cart_items.build(item_id: params[:item_id], cart_id: current_cart.id)
+      @cart_item = current_cart.cart_items.build(item_id: params[:item_id])
     end
-    @cart_items.stocks += params[:stocks].to_i
-    @cart_items.save
+    @cart_item.stocks += params[:stocks].to_i
+    @cart_item.save
     redirect_to current_cart
   end
 
@@ -24,7 +21,7 @@ class CartsController < ApplicationController
 
   def delete_item
     @cart_item.destroy
-    redirect_to current_cart
+    redirect_to cart_path(session[:cart_id])
   end
 
   private
