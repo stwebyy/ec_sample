@@ -1,17 +1,19 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  root 'items#index'
+
   resources :items do
     resources :item_reviews,  only: [:new, :index, :create, :update, :destroy]
+    resources :likes, only: [:create, :destroy]
+    post '/add_item' => 'carts#add_item'
+    post '/update_item' => 'carts#update_item'
+    delete '/delete_item' => 'carts#delete_item'
   end
-
-  get 'item_categories/create'
-  get 'item_categories/destroy'
   devise_for :users, :controllers => {
     :registrations => 'users/registrations',
     :sessions => 'users/sessions'   
   } 
-
   devise_scope :user do
     get "sign_in", :to => "users/sessions#new"
     get "sign_out", :to => "users/sessions#destroy" 
@@ -22,10 +24,9 @@ Rails.application.routes.draw do
   end
   resources :categories,  only: [:new, :create]
   root 'items#index'
-  resources :categories do
+　resources :categories,  only: [:new, :create] do
     resource :item_categories, only: [:create, :destroy]
   end
   resources :users, only: [:show]
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  # resources :users ,  only: [:get]
+  resources :carts, only: [:show]
 end

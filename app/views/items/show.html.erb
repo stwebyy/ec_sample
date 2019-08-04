@@ -36,6 +36,11 @@
   <%= button_to 'いいね', item_likes_path(@item) %>
 <% end %>
 <% end %>
+<%= form_with url: item_add_item_path(@item) do |form| %>
+  <%= form.number_field :stocks, min:1 %>
+  <%= form.hidden_field :item_id, value: @item.id %>
+  <%= form.submit 'カートに入れる' %>
+<% end %>
 
 <% unless @item.stocks < 1 %>
 <%= form_tag(action: :pay, method: :post) do %>
