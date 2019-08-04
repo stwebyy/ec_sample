@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   end
   resources :items do
     resources :likes, only: [:create, :destroy]
+    post :pay, on: :member
   end
   resources :categories,  only: [:new, :create]
   root 'items#index'

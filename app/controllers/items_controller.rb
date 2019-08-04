@@ -49,6 +49,22 @@ class ItemsController < ApplicationController
     redirect_back(fallback_location: items_path)
   end
 
+  def pay
+    @item = Item.find(params[:id])
+    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
+    charge = Payjp::Charge.create(
+      :amount => @item.price,
+      :card => params['payjp-token'],
+      :currency => 'jpy',
+    )
+    if charge
+      i = @item.stocks-1
+      @item.update_attribute(:stocks, i)
+      @item.save
+    end
+    redirect_to @item, notice: 'ご購入、ありがとうございました。'
+  end
+
   private
 
   def item_params

@@ -6,7 +6,7 @@ class Item < ActiveRecord::Base
   has_many :likes
   has_many :liked_users, through: :likes, source: :user
   validates :name, presence: true, length: { in: 1..50 }, uniqueness: true
-  validates :stocks, presence: true, numericality: { only_integer: true, greater_than: 0 }
+  validates :stocks, presence: true, numericality: { only_integer: true, greater_than: -1 }
   validates :description, presence: true, length: { minimum: 3 }
   validates :hide, inclusion: { in: [true, false] }
   # validate :prefix_hoge
