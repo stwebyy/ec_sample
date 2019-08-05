@@ -4,7 +4,7 @@
 <% @cart_items.each do |item| %>
 <% price = item.item.price * item.stocks %>
   <p>
-    商品名：<%= link_to item.item.name, item_path(item.item.id), data: {"turbolinks" => false}  %>
+    商品名：<%= link_to item.item.name, item_path(item.item.id), data: {"turbolinks" => false} %>
   </p>
   <p>
     数量：<%= item.stocks %>
@@ -19,4 +19,4 @@
   <%= button_to 'カートから削除する', item_delete_item_path(item.item.id), method: :delete %>
   <hr>
 <% end %>
-<%= link_to "商品購入ページ", cart_bill_confirm_path(current_cart.id) %>
+<%= link_to "商品購入ページ", cart_bill_confirm_path(current_cart.id), data: {"turbolinks" => false} %>
