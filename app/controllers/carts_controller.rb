@@ -1,5 +1,6 @@
 class CartsController < ApplicationController
   before_action :setup_cart_item!, only: [:add_item, :update_item, :delete_item]
+  before_action :set_search
 
   def show
     @cart_items = current_cart.cart_items
@@ -28,13 +29,13 @@ class CartsController < ApplicationController
     @cart_items = current_cart.cart_items
     all_price = 0
     @cart_items.each do |c|
-      @total_price = c.item.stocks * c.item.price
+      @total_price = c.stocks * c.item.price
       @all_price = @all_price.to_i + @total_price.to_i
     end
   end
 
   def pay
-    Payjp.api_key = "sk_test_5494a47f306e5073db277ee1"
+    Payjp.api_key = "sk_test_fb0dd938a4a447658641aa92"
     charge = Payjp::Charge.create(
       :amount => params[:amount],
       :card => params['payjp-token'],
@@ -42,7 +43,13 @@ class CartsController < ApplicationController
     )
     if charge
       @cart_items = current_cart.cart_items
+      @cart_items.each do |item|
+        result_stock = item.item.stocks.to_i - item.stocks.to_i
+        item.item.update_attribute(:stocks, result_stock)
+        item.destroy
+      end
       
+    end
     redirect_to root_path, notice: 'ご購入、ありがとうございました。'
   end
 

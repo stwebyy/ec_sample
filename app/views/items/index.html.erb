@@ -1,5 +1,6 @@
 <h1>Items#index</h1>
-
+<%= sort_link(@q, :name, "名前ソート") %>
+<%= sort_link(@q, :price, "価格ソート") %>
 <% @items.each do |item| %>
   <div>
     <p>
