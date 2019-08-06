@@ -19,6 +19,9 @@
         </p>
       <% end %>
     <% end %>
+    <% if @item.image.attached? %>
+      <%= image_tag @item.image %>
+    <% end %>
 <% unless @item.item_reviews.empty? %>
   <% @item.item_reviews.each do |re| %>
     <p>口コミ：<%= re.review %></p>

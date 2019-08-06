@@ -17,6 +17,9 @@
   <%= f.label :"表示・非表示設定" %>
   <%= f.check_box :hide %>
 
+  <%= f.label :"商品画像" %>
+  <%= f.file_field :image %>
+
   <%= f.fields_for :item_categories do |c| %>
     <%= c.collection_select :category_id, Category.all, :id, :name, :prompt =>"カテゴリを選択してください。" %>
   <% end %>

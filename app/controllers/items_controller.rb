@@ -74,7 +74,7 @@ class ItemsController < ApplicationController
   private
 
   def item_params
-    params.require(:item).permit(:name, :stocks, :price, :description, :hide, item_categories_attributes: [:id, :category_id])
+    params.require(:item).permit(:name, :stocks, :price, :description, :hide, :image, item_categories_attributes: [:id, :category_id])
   end
 
   def logged_in_user

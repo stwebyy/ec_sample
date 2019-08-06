@@ -21,5 +21,10 @@ mysql
 
 コード規約 rubocop  
 ユーザーモデル device  
-テスト関連 RSpec, factory_bot, database_cleaner
-認証機能 pay.jp
+テスト関連 RSpec, factory_bot, database_cleaner  
+検索機能 ransack  
+認証機能 pay.jp  
+画像関連 Active Strage  
+※Active Strageは  
+rails active_storage:install  
+上記コマンドを行なった後にrails db:migrateを行なってください。

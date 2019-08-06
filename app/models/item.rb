@@ -7,6 +7,7 @@ class Item < ActiveRecord::Base
   has_many :liked_users, through: :likes, source: :user
   has_many :cart_items
   has_many :cart, through: :cart_items
+  has_one_attached :image
   validates :name, presence: true, length: { in: 1..50 }, uniqueness: true
   validates :stocks, presence: true, numericality: { only_integer: true, greater_than: -1 }
   validates :description, presence: true, length: { minimum: 3 }

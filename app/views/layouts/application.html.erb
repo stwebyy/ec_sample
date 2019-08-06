@@ -22,14 +22,6 @@
             <% end %>
             <%= link_to "カート", current_cart %>
         </nav>
-        <%= search_form_for @q, url: find_items_path do |f| %>
-          <%= f.label :商品名 %>
-          <%= f.search_field :name_cont %>
-          <%= f.label :価格 %>
-          <%= f.number_field :price_gteq %>円以上〜
-          <%= f.number_field :price_lt %>円未満
-          <%= f.submit "検索" %>
-        <% end %>
     </header>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
