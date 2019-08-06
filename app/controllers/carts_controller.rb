@@ -40,6 +40,9 @@ class CartsController < ApplicationController
       :card => params['payjp-token'],
       :currency => 'jpy',
     )
+    if charge
+      @cart_items = current_cart.cart_items
+      
     redirect_to root_path, notice: 'ご購入、ありがとうございました。'
   end
 

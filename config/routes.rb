@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     delete '/delete_item' => 'carts#delete_item'
     post :pay, on: :member
   end
+  get '/search', to: 'items#search', as: 'search'
   devise_for :users, :controllers => {
     :registrations => 'users/registrations',
     :sessions => 'users/sessions'   

@@ -1,0 +1,38 @@
+<h1>Items#index</h1>
+
+<% @items.each do |item| %>
+  <div>
+    <p>
+    商品名：<%= link_to item.name, item_path(item.id), data: {"turbolinks" => false} %>
+    </p>
+    <p>
+      在庫数：<%= item.stocks %>
+    </p>
+    <p>
+      価格：<%= item.price %>
+    </p>
+    <p>
+      商品説明：<%= item.description %>
+    </p>
+    <% unless item.categories.empty? %>
+      <% item.categories.each do |cate| %>
+        <p>
+          カテゴリ：<%= cate.name %>
+        </p>
+      <% end %>
+    <% end %>
+    <p>ユーザーからいいねされた数：(<%= item.liked_users.count %>)</p>
+    <% if user_signed_in?&& current_user.admin = 1 %>
+    <%= link_to "情報変更", edit_item_path(item.id) %>
+    <%= link_to "削除", item_path(item.id), method: :delete, data: { confirm: "本当に削除してよろしいですか?" } %>
+    <% end %>
+  </div>
+  <hr>
+<% end %>
+<% if user_signed_in?&& current_user.admin = 1 %>
+<%= link_to "商品登録", new_item_path %>
+<%= link_to "カテゴリ登録", new_category_path %>
+
+<% end %>
+
+

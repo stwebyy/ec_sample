@@ -19,4 +19,10 @@ class Item < ActiveRecord::Base
   #     errors.add(:name, 'hoehohoehoheodehoehoehoho') # エラーメッセージ
   #   end
   # end
+
+  def self.search(search)
+    return Item.all unless search
+    Item.where(['name LIKE ?', "%#{search}%"])
+  end
+
 end

@@ -65,6 +65,10 @@ class ItemsController < ApplicationController
     redirect_to @item, notice: 'ご購入、ありがとうございました。'
   end
 
+  def search
+    @items = Item.search(params[:search])
+  end
+
   private
 
   def item_params
