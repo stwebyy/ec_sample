@@ -12,7 +12,7 @@
   <p>価格：<%= item.item.price %>円</p>
   <p>商品の合計金額：<%= price %>円
   <%= form_with url: item_update_item_path(item.item.id) do |form| %>
-    <%= form.number_field :stocks, min:1 %>
+    <%= form.number_field :stocks, min:1, max:item.item.stocks %>
     <%= form.hidden_field :item_id, value: item.id %>
     <%= form.submit "数量を変更する" %>
   <% end %>

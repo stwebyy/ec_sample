@@ -44,7 +44,7 @@
     </script>
   <% end %>
   <%= form_with url: item_add_item_path(@item) do |form| %>
-    <%= form.number_field :stocks, min:1 %>
+    <%= form.number_field :stocks, min:1, max:@item.stocks %>
     <%= form.hidden_field :item_id, value: @item.id %>
     <%= form.submit 'カートに入れる' %>
   <% end %>
