@@ -1,6 +1,7 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   before_action :admin_user, only: [:new, :create, :edit, :update, :destroy]
+  before_action :set_search
   # TODO
   # before_destroy :should_not_destroy_if_stock, prepend: true
 
@@ -22,6 +23,7 @@ class ItemsController < ApplicationController
 
   def index
     @items = Item.all
+    @items = @q.result
   end
 
   def show
@@ -65,8 +67,8 @@ class ItemsController < ApplicationController
     redirect_to @item, notice: 'ご購入、ありがとうございました。'
   end
 
-  def search
-    @items = Item.search(params[:search])
+  def find
+    @find_items = @q.result
   end
 
   private

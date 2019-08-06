@@ -3,6 +3,9 @@
 Rails.application.routes.draw do
   root 'items#index'
   resources :items do
+    collection do
+      get :find
+    end
     resources :item_reviews,  only: [:new, :index, :create, :update, :destroy]
     resources :likes, only: [:create, :destroy]
     post '/add_item' => 'carts#add_item'
@@ -10,7 +13,7 @@ Rails.application.routes.draw do
     delete '/delete_item' => 'carts#delete_item'
     post :pay, on: :member
   end
-  get '/search', to: 'items#search', as: 'search'
+  get 'items/find', to: 'items#find_column', as: 'find_column'
   devise_for :users, :controllers => {
     :registrations => 'users/registrations',
     :sessions => 'users/sessions'   

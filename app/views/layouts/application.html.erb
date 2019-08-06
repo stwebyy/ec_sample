@@ -22,10 +22,16 @@
             <% end %>
             <%= link_to "カート", current_cart %>
         </nav>
-        <%= form_tag(search_path, :method => 'get') do %>
-          <%= text_field_tag :search %>
-          <%= submit_tag 'Search', :name => nil %>
+        <%= search_form_for @q, url: find_items_path do |f| %>
+          <%= f.label :商品名 %>
+          <%= f.search_field :name_cont %>
+          <%= f.label :価格 %>
+          <%= f.number_field :price_gteq %>円以上〜
+          <%= f.number_field :price_lt %>円未満
+          <%= f.submit "検索" %>
         <% end %>
+        <%= sort_link(@q, :name, "名前ソート") %>
+        <%= sort_link(@q, :price, "価格ソート") %>
     </header>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>

@@ -2,9 +2,7 @@
 
 class ApplicationController < ActionController::Base
   before_action :set_turbolinks_header
-  
   protect_from_forgery with: :exception
-
   helper_method :current_cart
 
   def set_turbolinks_header
@@ -17,5 +15,9 @@ class ApplicationController < ActionController::Base
 			cart = Cart.create
 			session[:cart_id] = cart.id
 			cart
+  end
+
+  def set_search
+    @q=Item.ransack(params[:q])
   end
 end
