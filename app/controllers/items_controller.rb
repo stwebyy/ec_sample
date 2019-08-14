@@ -23,6 +23,7 @@ class ItemsController < ApplicationController
 
   def index
     @items = Item.all
+    @category = Category.all
     @items = @q.result
   end
 
@@ -33,6 +34,7 @@ class ItemsController < ApplicationController
 
   def edit
     @item = Item.find(params[:id])
+    @item.item_categories.build
   end
 
   def update

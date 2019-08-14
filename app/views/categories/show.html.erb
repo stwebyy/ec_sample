@@ -1,0 +1,49 @@
+<h1>Categories#show</h1>
+<p>Find me in app/views/Categories/show.html.erb</p>
+<p>カテゴリ名:<%= @category.name %>
+<% @items.each do |items| %>
+    <p>
+    商品名：<%= items.name %>
+    </p>
+    <p>
+      在庫数：<%= items.stocks %>
+    </p>
+    <p>
+      価格：<%= items.price %>
+    </p>
+    <p>
+      商品説明：<%= items.description %>
+    </p>
+    <% unless items.categories.empty? %>
+      <% items.categories.each do |cate| %>
+        <p>
+          カテゴリ：<%= cate.name %>
+        </p>
+      <% end %>
+    <% end %>
+    <% if items.image.attached? %>
+      <%= image_tag items.image %>
+    <% end %>
+<h3>いいね件数: <%= items.likes.count %></h3>
+<% if user_signed_in? %>
+  <% if current_user.already_liked?(items) %>
+    <%= button_to 'いいねを取り消す', item_like_path(items), method: :delete %>
+  <% else %>
+    <%= button_to 'いいね', item_likes_path(items) %>
+  <% end %>
+<% end %>
+<% unless items.stocks < 1 %>
+  <%= form_tag(action: :pay, method: :post) do %>
+    <script type="text/javascript"
+      src="https://checkout.pay.jp"
+      class="payjp-button"
+      data-key="pk_test_195e7aef15d83551e679aec3">
+    </script>
+  <% end %>
+  <%= form_with url: item_add_item_path(items) do |form| %>
+    <%= form.number_field :stocks, min:1, max:items.stocks %>
+    <%= form.hidden_field :item_id, value: items.id %>
+    <%= form.submit 'カートに入れる' %>
+  <% end %>
+<% end %>
+<% end %>

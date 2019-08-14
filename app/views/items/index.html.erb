@@ -9,6 +9,18 @@
 <% end %>
 <%= sort_link(@q, :name, "名前ソート") %>
 <%= sort_link(@q, :price, "価格ソート") %>
+<hr>
+カテゴリ
+<% @category.each do |f| %>
+<table>
+<tr>
+<td>
+  <%= link_to f.name, category_path(f.id)%>
+  </td>
+  </tr>
+  </table>
+<% end %>
+<hr>
 <% @items.each do |item| %>
   <div>
     <p>
