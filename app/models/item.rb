@@ -12,13 +12,5 @@ class Item < ActiveRecord::Base
   validates :stocks, presence: true, numericality: { only_integer: true, greater_than: -1 }
   validates :description, presence: true, length: { minimum: 3 }
   validates :hide, inclusion: { in: [true, false] }
-  # validate :prefix_hoge
-
-  # バリデーションメソッド
-  # def prefix_hoge
-  #   if name != 'hoge' # バリデーションの条件
-  #     errors.add(:name, 'hoehohoehoheodehoehoehoho') # エラーメッセージ
-  #   end
-  # end
-
+  validates :price, numericality: { only_integer: true, greater_than: 0 }
 end
