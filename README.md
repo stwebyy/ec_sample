@@ -21,7 +21,7 @@ mysql
 
 コード規約 rubocop  
 ユーザーモデル device  
-テスト関連 RSpec, factory_bot, database_cleaner  
+テスト関連 RSpec, factory_bot, database_cleaner, Shoulda-matchers  
 検索機能 ransack  
 認証機能 pay.jp  
 画像関連 Active Strage  
