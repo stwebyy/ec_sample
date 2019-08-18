@@ -12,7 +12,7 @@ RSpec.describe User, type: :model do
   describe 'varidate動作検証' do
     let(:user) { build(:user) }
     subject { save }
-    shared_examples 'saveに失敗する例' do
+    shared_examples 'saveに失敗' do
       it { is_expected.to eq(false) }
     end
     context 'nameがないためsaveができない' do
@@ -20,21 +20,21 @@ RSpec.describe User, type: :model do
         user.name = ''
       end
       let(:save) { user.save }
-      it_behaves_like 'saveに失敗する例'
+      it_behaves_like 'saveに失敗'
     end
     context 'emailがないためsaveができない' do
       before do
         user.email = ''
       end
       let(:save) { user.save }
-      it_behaves_like 'saveに失敗する例'
+      it_behaves_like 'saveに失敗'
     end
     context 'passwordがないためsaveができない' do
       before do
         user.password = ''
       end
       let(:save) { user.save }
-      it_behaves_like 'saveに失敗する例'
+      it_behaves_like 'saveに失敗'
     end
   end
 end

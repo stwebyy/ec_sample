@@ -12,5 +12,5 @@ class Item < ActiveRecord::Base
   validates :stocks, presence: true, numericality: { only_integer: true, greater_than: -1 }
   validates :description, presence: true, length: { minimum: 3 }
   validates :hide, inclusion: { in: [true, false] }
-  validates :price, numericality: { only_integer: true, greater_than: 0 }
+  validates :price, presence: true, numericality: { only_integer: true, greater_than: 0 }
 end
