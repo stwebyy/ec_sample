@@ -1,4 +1,5 @@
 class Item < ActiveRecord::Base
+  belongs_to :user
   has_many :item_reviews
   has_many :item_categories
   has_many :categories, through: :item_categories
@@ -13,4 +14,11 @@ class Item < ActiveRecord::Base
   validates :description, presence: true, length: { minimum: 3 }
   validates :hide, inclusion: { in: [true, false] }
   validates :price, presence: true, numericality: { only_integer: true, greater_than: 0 }
+  validate :user_id?
+
+  def user_id?
+    if user_id != 1
+      errors.add(:name, ' はadmin権限を持ったユーザーのみ登録できます。')
+    end
+  end
 end

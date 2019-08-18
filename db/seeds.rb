@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
-# Userを追加
+User.create!(
+  name: "admin",
+  email: "admin@admin.com",
+  password: "test_admin",
+  admin: true
+)
 
 10.times do |num|
   User.create!(
@@ -13,21 +18,16 @@
     stocks: 1 + num,
     price: 1000 + num,
     description: "test_description#{num}",
-    hide: 1
+    hide: 1,
+    user_id: '1'
   )
   Category.create!(
     name: "test_category#{num}"
   )
 end
 
-User.create!(
-  name: "admin",
-  email: "admin@admin.com",
-  password: "test_admin",
-  admin: 1
-)
-
 ItemReview.create!(
   review: "test_review",
   item_id: 1
 )
+
