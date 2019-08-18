@@ -30,4 +30,3 @@ ItemReview.create!(
   review: "test_review",
   item_id: 1
 )
-

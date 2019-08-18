@@ -17,7 +17,9 @@ class Item < ActiveRecord::Base
   validate :user_id?
 
   def user_id?
-    if user_id != 1
+    i = user_id
+    admin = User.find(user_id).admin
+    if admin != true
       errors.add(:name, ' はadmin権限を持ったユーザーのみ登録できます。')
     end
   end
