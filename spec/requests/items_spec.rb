@@ -66,16 +66,17 @@ RSpec.describe "Items", type: :request do
   end
   describe "GET /items/show" do
     let!(:user) { create(:user) }
-    let!(:item) { Item.new(params) }
     let!(:params) { {
       name: "TEST_ITEM_NAME",
       stocks: 10,
       description: "TEST_DESCRIPTON",
       price: 1000,
+      hide: 1,
+      user_id: 1
      } }
-     let!(:save) { item.save }
-    # let!(:category) { create(:category) }
-
+    let!(:item) { Item.create(params) }
+    let!(:category) { create(:category) }
+    let!(:item_category) { create(:item_category) }
     describe "ログイン状態は関係無し" do
       subject { response.body }
       it "render show" do
@@ -83,23 +84,23 @@ RSpec.describe "Items", type: :request do
         expect(response).to have_http_status(200)
       end
       it '商品名が表示されていること' do
-        get item_path(id: item)
+        get item_path(id: item.id)
         is_expected.to include "TEST_ITEM_NAME"
       end
-      # it 'カテゴリが表示されていること' do
-      #   get item_path(id: item)
-      #   is_expected.to include "TEST_CATEGORY_NAME"
-      # end
+      it 'カテゴリが表示されていること' do
+        get item_path(id: item.id)
+        is_expected.to include "TEST_CATEGORY_NAME"
+      end
       it '在庫数が表示されていること' do
-        get item_path(id: item)
-        is_expected.to include "在庫数："
+        get item_path(id: item.id)
+        is_expected.to include "在庫数：10"
       end
       it '価格が表示されていること' do
-        get item_path(id: item)
-        is_expected.to include "価格："
+        get item_path(id: item.id)
+        is_expected.to include "価格：1000"
       end
       it '商品説明が表示されていること' do
-        get item_path(id: item)
+        get item_path(id: item.id)
         is_expected.to include "商品説明：TEST_DESCRIPTON"
       end
     end
