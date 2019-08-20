@@ -24,7 +24,6 @@ class ItemsController < ApplicationController
   def index
     @items = Item.all
     @category = Category.all
-    @items = @q.result
   end
 
   def show

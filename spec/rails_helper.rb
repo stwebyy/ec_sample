@@ -80,6 +80,8 @@ RSpec.configure do |config|
   config.after(:all) do
     DatabaseCleaner.clean
   end
+
+  config.include Devise::Test::IntegrationHelpers, type: :request
 end
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|
