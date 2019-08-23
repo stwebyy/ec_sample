@@ -77,8 +77,8 @@ RSpec.describe "Items", type: :request do
     let!(:item) { Item.create(params) }
     let!(:category) { create(:category) }
     let!(:item_category) { create(:item_category) }
+    subject { response.body }
     describe "ログイン状態は関係無し" do
-      subject { response.body }
       it "render show" do
         get item_path(id: item)
         expect(response).to have_http_status(200)
@@ -102,6 +102,37 @@ RSpec.describe "Items", type: :request do
       it '商品説明が表示されていること' do
         get item_path(id: item.id)
         is_expected.to include "商品説明：TEST_DESCRIPTON"
+      end
+      it 'カードで支払うボタンが表示される' do
+        get item_path(id: item.id)
+        is_expected.to include '<form action="/items/1/pay?method=post" accept-charset="UTF-8" method="post">'
+      end
+      it 'カートボタンが表示される' do
+        get item_path(id: item.id)
+        is_expected.to include '<input type="submit" name="commit" value="カートに入れる" data-disable-with="カートに入れる" />'
+      end
+    end
+    describe "ログインしている場合" do
+      before do
+        sign_in user
+      end
+      it '口コミを書くボタンが表示されていること' do
+        get item_path(id: item.id)
+        is_expected.to include "口コミを書く"
+      end
+      it 'いいねボタンが表示される' do
+        get item_path(id: item.id)
+        is_expected.to include 'form class="button_to" method="post" action="/items/1/likes">'
+      end
+    end
+    describe "ログインしている場合" do
+      it '口コミが表示されていないこと' do
+        get item_path(id: item.id)
+        is_expected.not_to include "口コミを書く"
+      end
+      it 'いいねボタンが表示されない' do
+        get item_path(id: item.id)
+        is_expected.not_to include 'form class="button_to" method="post" action="/items/1/likes">'
       end
     end
   end
