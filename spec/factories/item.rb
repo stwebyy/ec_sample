@@ -6,5 +6,8 @@ FactoryBot.define do
     sequence(:hide) { 1 }
     sequence(:price, 500) { |n| "#{n}" }
     user_id { 1 }
+    after(:create) do |item|
+      create(:item_category, item: item, category: create(:category))
+    end
   end
 end

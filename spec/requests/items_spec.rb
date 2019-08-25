@@ -66,17 +66,8 @@ RSpec.describe "Items", type: :request do
   end
   describe "GET /items/show" do
     let!(:user) { create(:user) }
-    let!(:params) { {
-      name: "TEST_ITEM_NAME",
-      stocks: 10,
-      description: "TEST_DESCRIPTON",
-      price: 1000,
-      hide: 1,
-      user_id: 1
-     } }
-    let!(:item) { Item.create(params) }
+    let!(:item) { create(:item, stocks: 10, price: 1000) }
     let!(:category) { create(:category) }
-    let!(:item_category) { create(:item_category) }
     subject { response.body }
     describe "ログイン状態は関係無し" do
       it "render show" do
@@ -125,7 +116,7 @@ RSpec.describe "Items", type: :request do
         is_expected.to include 'form class="button_to" method="post" action="/items/1/likes">'
       end
     end
-    describe "ログインしている場合" do
+    describe "ログインしていない場合" do
       it '口コミが表示されていないこと' do
         get item_path(id: item.id)
         is_expected.not_to include "口コミを書く"
@@ -134,6 +125,60 @@ RSpec.describe "Items", type: :request do
         get item_path(id: item.id)
         is_expected.not_to include 'form class="button_to" method="post" action="/items/1/likes">'
       end
+    end
+  end
+  describe "GET /items/new" do
+    let!(:user) { create(:user) }
+    let!(:user2) { create(:user, admin: false) }
+    let!(:category) { create(:category) }
+    describe "ログインしていない場合" do
+      it 'リダイレクトされること' do
+        get new_item_path
+        expect(response).to have_http_status(302)
+      end
+      it '商品が登録されないこと' do
+        expect do
+          post items_path, params: { item: FactoryBot.attributes_for(:item) }
+        end.to change(Item, :count).by(0)
+      end
+    end
+    describe "ログインしているが管理者権限がない場合" do
+      before do
+        sign_in user2
+      end
+      it 'ログイン中が表示されること' do
+        get items_path
+        expect(response.body).to include "ログイン中"
+      end
+      it '302が返ってくること' do
+        get new_item_path
+        expect(response).to have_http_status(302)
+      end
+      it '商品が登録されないこと' do
+        expect do
+          post items_path, params: { item: FactoryBot.attributes_for(:item) }
+        end.to change(Item, :count).by(0)
+      end
+    end
+    describe "管理者権限があるユーザーがログインしている場合" do
+      before do
+        sign_in user
+      end
+      it '200が返ってくること' do
+        get new_item_path
+        expect(response).to have_http_status(200)
+      end
+      it '商品が登録されること' do
+        expect do
+          post items_path, params: { item: FactoryBot.attributes_for(:item) }
+        end.to change(Item, :count).by(1)
+      end
+      # TODO
+      # it '商品カテゴリが登録されること' do
+      #   expect do
+      #     post items_path, params: { item: FactoryBot.attributes_for(:item) }
+      #   end.to change(ItemCategory, :count).by(1)
+      # end
     end
   end
 end
